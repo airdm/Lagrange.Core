@@ -283,7 +283,7 @@ internal class PushMessageService : BaseService<PushMessageEvent>
         {
             case Event0x210SubType.FriendRequestNotice when msg.Message.Body?.MsgContent is { } content:
             {
-                extraEvents.Add();
+                
                 break;
             }
             case Event0x210SubType.GroupMemberEnterNotice when msg.Message.Body?.MsgContent is { } content:
