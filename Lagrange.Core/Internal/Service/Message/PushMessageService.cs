@@ -283,8 +283,14 @@ internal class PushMessageService : BaseService<PushMessageEvent>
         {
             case Event0x210SubType.FriendRequestNotice when msg.Message.Body?.MsgContent is { } content:
             {
-                var friendEvent = FriendSysRequestEvent.Result(msg.Message.ResponseHead.FromUin, info.SourceUid, info.Message, info.Source ?? info.NewSource);
-                    extraEvents.Add(friendEvent);
+                var info = Serializer.Deserialize<FriendRequest>(content.AsSpan()).Info;
+                var friendEvent = FriendSysRequestEvent.Result(
+                    msg.Message.ResponseHead.FromUin,
+                    info?.SourceUid,
+                    info?.Message,
+                    info?.Source ?? info?.NewSource
+                );
+                extraEvents.Add(friendEvent);
                 break;
             }
             case Event0x210SubType.GroupMemberEnterNotice when msg.Message.Body?.MsgContent is { } content:
