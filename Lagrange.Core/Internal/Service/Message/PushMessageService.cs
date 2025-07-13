@@ -286,7 +286,9 @@ internal class PushMessageService : BaseService<PushMessageEvent>
                 
                 if (Serializer.Deserialize<FriendRequest>(content.AsSpan()).Info is { } info)
                 {
+                    Collection.Log.LogInfo(Tag, $"ceshi to {info}");
                     var friendEvent = FriendSysRequestEvent.Result(msg.Message.ResponseHead.FromUin, info.SourceUid, info.Message, info.Source ?? info.NewSource);
+                    Collection.Log.LogInfo(Tag, $"ceshi2 to {friendEvent}");
                     extraEvents.Add(friendEvent);
                 }
                 break;
