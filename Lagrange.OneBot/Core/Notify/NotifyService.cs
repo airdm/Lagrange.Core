@@ -42,6 +42,7 @@ public sealed class NotifyService(BotContext bot, ILogger<NotifyService> logger,
 
         bot.Invoker.OnFriendRequestEvent += async (_, @event) =>
         {
+            Console.WriteLine($"通道11");
             logger.LogInformation(@event.ToString());
             await service.SendJsonAsync(new OneBotFriendRequestNotice(bot.BotUin, @event.SourceUin));
             await service.SendJsonAsync(new OneBotFriendRequest(bot.BotUin, @event.SourceUin, @event.Message, @event.SourceUid));
