@@ -17,6 +17,7 @@ namespace Lagrange.Core.Internal.Service.Message;
 [Service("trpc.msg.olpush.OlPushService.MsgPush")]
 internal class PushMessageService : BaseService<PushMessageEvent>
 {
+    private const string Tag = nameof(PushMessageService);
     protected override bool Parse(Span<byte> input, BotKeystore keystore, BotAppInfo appInfo, BotDeviceInfo device,
         out PushMessageEvent output, out List<ProtocolEvent>? extraEvents)
     {
@@ -286,10 +287,10 @@ internal class PushMessageService : BaseService<PushMessageEvent>
                 
                 if (Serializer.Deserialize<FriendRequest>(content.AsSpan()).Info is { } info)
                 {
-                    _logger.LogInformation("ceshi: {}", info);
+                    Collection.Log.LogVerbose(Tag, $"ceshi: {info}");
                     var friendEvent = FriendSysRequestEvent.Result(msg.Message.ResponseHead.FromUin, info.SourceUid, info.Message, info.Source ?? info.NewSource);
-                    
-                    _logger.LogInformation("ceshi2: {}", friendEvent);
+                
+                    Collection.Log.LogVerbose(Tag, $"ceshi2: {friendEvent}");
                     extraEvents.Add(friendEvent);
                 }
                 break;
